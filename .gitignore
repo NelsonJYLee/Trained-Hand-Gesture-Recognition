@@ -5,3 +5,11 @@ _pycache_/
 *.pyc
 
 .DS_Store
+
+data.pickle
+
+model.pickle
+
+norm_data.pickle
+
+new_model.pickle
