@@ -3,9 +3,9 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
+model_file = './model1.pickle'
 
-
-model_dict = pickle.load(open('./new_model.pickle', 'rb'))
+model_dict = pickle.load(open(model_file, 'rb'))
 model = model_dict['model']
 
 cap = cv2.VideoCapture(0)
@@ -16,7 +16,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=False, max_num_hands=1, min_detection_confidence=0.3)
 
-labels_dict = {0: "prev", 1: "next", 2:"point"}
+labels_dict = {0: "closed", 1: "previous", 2: "next", 3: "pointer", 4: "drawer"}
 
 ESC_key = 27
 
@@ -57,13 +57,16 @@ while True:
         x2 = int(max(x_) * W) + 30
         y2 = int(max(y_) * H) + 30
 
+        probs = model.predict_proba([np.asarray(data_aux)])
+        confidence = np.max(probs)
+        prediction = np.argmax(probs)
 
-        prediction = model.predict([np.asarray(data_aux)])
+        predicted_gesture = labels_dict[int(prediction)]
 
-        predicted_gesture = labels_dict[int(prediction[0])]
+        
 
         cv2.rectangle(frame, (x1, y1), (x2, y2), (0,0,0), 4)
-        cv2.putText(frame, predicted_gesture, (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0,0,0), 3, cv2.LINE_AA)
+        cv2.putText(frame, f'{predicted_gesture} ({confidence*100:.2f}%)', (x1, y1 - 10), cv2.FONT_HERSHEY_SIMPLEX, 1.3, (0,0,0), 3, cv2.LINE_AA)
 
     cv2.imshow('frame', frame)
     key = cv2.waitKey(1)

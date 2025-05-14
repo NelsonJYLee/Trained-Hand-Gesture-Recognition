@@ -6,10 +6,9 @@ _pycache_/
 
 .DS_Store
 
-data.pickle
+pickle_data
 
-model.pickle
+models
 
-norm_data.pickle
+data1
 
-new_model.pickle

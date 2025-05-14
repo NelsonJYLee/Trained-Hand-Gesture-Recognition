@@ -11,7 +11,7 @@ mp_drawing_styles = mp.solutions.drawing_styles
 
 hands = mp_hands.Hands(static_image_mode=True, min_detection_confidence=0.3)
 
-DATA_DIR = './data'
+DATA_DIR = './data1'
 
 data = []
 norm_data = []
@@ -50,10 +50,10 @@ for dir_ in os.listdir(DATA_DIR):
             norm_data.append(norm_data_aux)
             labels.append(dir_)
 
-f = open('data.pickle', 'wb')
+f = open('data1.pickle', 'wb')
 pickle.dump({'data': data, 'labels': labels}, f)
 f.close()
 
-norm_f = open('norm_data.pickle', 'wb')
+norm_f = open('norm_data1.pickle', 'wb')
 pickle.dump({'data': norm_data, 'labels': labels}, norm_f)
 norm_f.close()
