@@ -35,8 +35,6 @@ while True:
 
     results = hands.process(frame_rgb)
     if results.multi_hand_landmarks:
-        trans_x_vals = []
-        trans_y_vals = []
         for hand_landmarks in results.multi_hand_landmarks:
             mp_drawing.draw_landmarks(
                 frame,
@@ -48,26 +46,10 @@ while True:
             for i in range(len(hand_landmarks.landmark)):
                 x = hand_landmarks.landmark[i].x
                 y = hand_landmarks.landmark[i].y
-
-                trans_x = x - hand_landmarks.landmark[0].x
-                trans_y = y - hand_landmarks.landmark[0].y
-
-                trans_x_vals.append(trans_x)
-                trans_y_vals.append(trans_y)
-
-                data_aux.append(trans_x)
-                data_aux.append(trans_y)
-
+                data_aux.append(x - hand_landmarks.landmark[0].x)
+                data_aux.append(y - hand_landmarks.landmark[0].y)
                 x_.append(x)
                 y_.append(y)
-
-            x_range = max(trans_x_vals) - min(trans_x_vals)
-            y_range = max(trans_y_vals) - min(trans_y_vals)
-            handsize = max(x_range, y_range)
-
-            for i in range(len(data_aux)):
-                data_aux[i] /= handsize
-
 
         x1 = int(min(x_) * W) - 30
         y1 = int(min(y_) * H) - 30
