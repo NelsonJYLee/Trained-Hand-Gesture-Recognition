@@ -3,7 +3,7 @@ import cv2
 import mediapipe as mp
 import numpy as np
 
-model_file = './models/model2.pickle'
+model_file = './models/model3.pickle'
 
 model_dict = pickle.load(open(model_file, 'rb'))
 model = model_dict['model']
